@@ -1,0 +1,143 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>CxP</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<style>
+		/* Center the loader */
+		#loader {
+			position: absolute;
+			left: 52%;
+			top: 40%;
+			z-index: 1;
+			width: 20px;
+			height: 20px;
+			margin: -75px 0 0 -75px;
+			border: 20px solid #f3f3f3;
+			border-radius: 50%;
+			border-top: 20px solid #3498db;
+			width: 80px;
+			height: 80px;
+			webkit-animation: spin 2s linear infinite;
+			animation: spin 2s linear infinite;
+		}
+
+		@-webkit-keyframes spin {
+			0% {
+				-webkit-transform: rotate(0deg);
+			}
+
+			100% {
+				-webkit-transform: rotate(360deg);
+			}
+		}
+
+		@keyframes spin {
+			0% {
+				transform: rotate(0deg);
+			}
+
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+
+		/* Add animation to "page content" */
+		.animate-bottom {
+			position: relative;
+			-webkit-animation-name: animatebottom;
+			-webkit-animation-duration: 1s;
+			animation-name: animatebottom;
+			animation-duration: 1s
+		}
+
+		@-webkit-keyframes animatebottom {
+			from {
+				bottom: -100px;
+				opacity: 0
+			}
+
+			to {
+				bottom: 0px;
+				opacity: 1
+			}
+		}
+
+		@keyframes animatebottom {
+			from {
+				bottom: -100px;
+				opacity: 0
+			}
+
+			to {
+				bottom: 0;
+				opacity: 1
+			}
+		}
+
+		#myDiv {
+			display: none;
+			text-align: center;
+		}
+		.mypay-button{
+			display: none;
+		}
+	</style>
+</head>
+
+<body style="margin:0;">
+
+
+	<!--Construct form to submit authorization request to 2c2p PGW-->
+	<!--Payment request data should be sent to 2c2p PGW with POST method inside parameter named 'paymentRequest'-->
+	<!-- <form action='https://t.2c2p.com/RedirectV3/payment' method='POST' name='authForm'> -->
+	<div id="loader"></div>
+	<form method="POST" th:action="${payment.paymentQuery}" name="authForm">
+		<script type="text/javascript"  id="kbankUI"
+			src="https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js"
+			>
+			</script>
+	</form>
+	<script language="JavaScript" th:inline="javascript">
+		/*<![CDATA[*/
+		var kbank = document.querySelector("#kbankUI")	;
+		var publicKey= /*[[${payment.publicKey}]]*/'default';
+		var amount = /*[[${payment.dataAmount}]]*/'default'; 
+		var paymentMethod = /*[[${payment.paymentMethod}]]*/'default'; 
+		var currency = /*[[${payment.currency}]]*/'default'; 
+		var refNo= /*[[${payment.referenceOrder}]]*/'default'; 
+		var isSmartPay = /*[[${payment.isSmartPay}]]*/'default'; 
+		var term = /*[[${payment.term}]]*/'default'; 
+		if(isSmartPay){
+			kbank.setAttribute("data-smartpay-id","0001");
+			kbank.setAttribute("data-term",term || "3");
+		}
+		kbank.setAttribute("data-apikey",publicKey);
+		kbank.setAttribute("data-amount",amount);
+		kbank.setAttribute("data-currency",currency);
+		kbank.setAttribute("data-payment-methods",paymentMethod);
+		kbank.setAttribute("data-ref-number",refNo);
+		kbank.setAttribute("data-mid","401044777777001");
+		kbank.setAttribute("data-name","SMK-DEV");
+
+
+
+		/*]]>*/
+	document.addEventListener('DOMContentLoaded', (event) => {
+		let button  = document.querySelector(".pay-button");
+		let loader = document.getElementById("loader");
+		loader.classList.add("mypay-bytton");
+		button.classList.remove("pay-button");
+		button.classList.add("mypay-button");
+		button.click();
+	//401044777777001	
+
+	})
+
+		//document.authForm.submit();     //submit form to 2c2p Redirect
+	</script>
+</body>
+
+</html>

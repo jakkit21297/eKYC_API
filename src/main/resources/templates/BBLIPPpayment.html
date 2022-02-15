@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CxP</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<style>
+		/* Center the loader */
+		#loader {
+			position: absolute;
+		    left: 52%;
+		    top: 40%;
+		    z-index: 1;
+		    width: 20px;
+		    height: 20px;
+		    margin: -75px 0 0 -75px;
+		    border: 20px solid #f3f3f3;
+		    border-radius: 50%;
+		    border-top: 20px solid #3498db;
+		    width: 80px;
+		    height: 80px;
+		    webkit-animation: spin 2s linear infinite;
+		    animation: spin 2s linear infinite;
+		}
+		
+		@-webkit-keyframes spin {
+		  0% { -webkit-transform: rotate(0deg); }
+		  100% { -webkit-transform: rotate(360deg); }
+		}
+		
+		@keyframes spin {
+		  0% { transform: rotate(0deg); }
+		  100% { transform: rotate(360deg); }
+		}
+		
+		/* Add animation to "page content" */
+		.animate-bottom {
+		  position: relative;
+		  -webkit-animation-name: animatebottom;
+		  -webkit-animation-duration: 1s;
+		  animation-name: animatebottom;
+		  animation-duration: 1s
+		}
+		
+		@-webkit-keyframes animatebottom {
+		  from { bottom:-100px; opacity:0 } 
+		  to { bottom:0px; opacity:1 }
+		}
+		
+		@keyframes animatebottom { 
+		  from{ bottom:-100px; opacity:0 } 
+		  to{ bottom:0; opacity:1 }
+		}
+		
+		#myDiv {
+		  display: none;
+		  text-align: center;
+		}
+		</style>
+</head>
+<body style="margin:0;">
+
+
+<!--Construct form to submit authorization request to 2c2p PGW-->
+<!--Payment request data should be sent to 2c2p PGW with POST method inside parameter named 'paymentRequest'-->
+<!-- <form action='https://t.2c2p.com/RedirectV3/payment' method='POST' name='authForm'> -->
+<form action='https://psipay.bangkokbank.com/b2c/eng/payment/payForm.jsp' method='POST' name='authForm'>
+
+    <!--display wait message to user when page is loading-->
+    Demo Please wait for a while. Do not close the browser or refresh the page.
+    <!--load request data-->
+	<div id="loader"></div>
+	
+	<input type='hidden' id='merchantId' 				name='merchantId' 		th:value="${bblIPPpayment.merchantId}"/>
+	<input type='hidden' id='amount' 					name='amount' 			th:value="${bblIPPpayment.amount}"/>
+	<input type='hidden' id='orderRef' 					name='orderRef' 		th:value="${bblIPPpayment.orderRef}"/>
+	<input type='hidden' id='currCode' 					name='currCode' 		th:value="${bblIPPpayment.currCode}"/>
+	<input type='hidden' id='successUrl' 				name='successUrl' 		th:value="${bblIPPpayment.successUrl}"/>
+	<input type='hidden' id='failUrl' 					name='failUrl' 			th:value="${bblIPPpayment.failUrl}"/>
+	<input type='hidden' id='cancelUrl' 				name='cancelUrl'  		th:value="${bblIPPpayment.cancelUrl}"/>
+	<input type='hidden' id='lang' 						name='lang' 			th:value="${bblIPPpayment.lang}"/>
+	<input type='hidden' id='remark' 					name='remark'  			th:value="${bblIPPpayment.remark}"/>
+	<input type="hidden" id="orderRef1"                 name="orderRef1"        th:value="${bblIPPpayment.orderRef}"/>
+	<input type="hidden" id="orderRef2"                 name="orderRef2"        th:value="${bblIPPpayment.custno}"/>
+	<input type='hidden' id='payType' 					name='payType' 			th:value="${bblIPPpayment.payType}"/>
+	<input type='hidden' id='appId' 					name='appId' 			th:value="${bblIPPpayment.appId}"/>
+	<input type='hidden' id='calmode' 					name='calmode' 			th:value="${bblIPPpayment.calmode}"/>
+	<input type='hidden' id='payTerm' 					name='payTerm' 			th:value="${bblIPPpayment.payTerm}"/>
+	<input type='hidden' id='computeMethod' 			name='computeMethod' 	th:value="${bblIPPpayment.computeMethod}"/>
+	<input type='hidden' id='payMethod' 				name='payMethod' 		th:value="${bblIPPpayment.payMethod}"/>
+	
+	<input type='hidden' id='ProductCode' 				name='ProductCode' 		th:value="${bblIPPpayment.ProductCode}"/>
+	<input type='hidden' id='SerialNumber' 				name='SerialNumber' 		th:value="${bblIPPpayment.SerialNumber}"/>
+</form>
+
+<script language="JavaScript">
+	document.authForm.submit();     //submit form to 2c2p Redirect
+</script>
+</body>
+</html>

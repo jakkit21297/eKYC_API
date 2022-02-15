@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CxP</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<style>
+		/* Center the loader */
+		#loader {
+			position: absolute;
+		    left: 52%;
+		    top: 40%;
+		    z-index: 1;
+		    width: 20px;
+		    height: 20px;
+		    margin: -75px 0 0 -75px;
+		    border: 20px solid #f3f3f3;
+		    border-radius: 50%;
+		    border-top: 20px solid #3498db;
+		    width: 80px;
+		    height: 80px;
+		    webkit-animation: spin 2s linear infinite;
+		    animation: spin 2s linear infinite;
+		}
+		
+		@-webkit-keyframes spin {
+		  0% { -webkit-transform: rotate(0deg); }
+		  100% { -webkit-transform: rotate(360deg); }
+		}
+		
+		@keyframes spin {
+		  0% { transform: rotate(0deg); }
+		  100% { transform: rotate(360deg); }
+		}
+		
+		/* Add animation to "page content" */
+		.animate-bottom {
+		  position: relative;
+		  -webkit-animation-name: animatebottom;
+		  -webkit-animation-duration: 1s;
+		  animation-name: animatebottom;
+		  animation-duration: 1s
+		}
+		
+		@-webkit-keyframes animatebottom {
+		  from { bottom:-100px; opacity:0 } 
+		  to { bottom:0px; opacity:1 }
+		}
+		
+		@keyframes animatebottom { 
+		  from{ bottom:-100px; opacity:0 } 
+		  to{ bottom:0; opacity:1 }
+		}
+		
+		#myDiv {
+		  display: none;
+		  text-align: center;
+		}
+		</style>
+</head>
+<body style="margin:0;">
+
+
+<!--Construct form to submit authorization request to 2c2p PGW-->
+<!--Payment request data should be sent to 2c2p PGW with POST method inside parameter named 'paymentRequest'-->
+<!-- <form action='https://t.2c2p.com/RedirectV3/payment' method='POST' name='authForm'> -->
+<form action='https://demo2.2c2p.com/2C2PFrontEnd/RedirectV3/payment' method='POST' name='authForm'>
+
+    <!--display wait message to user when page is loading-->
+    Demo Please wait for a while. Do not close the browser or refresh the page.
+    <!--load request data-->
+    <div id="loader"></div>
+
+    <input type='hidden' id='version' 				name='version' 				th:value="${payment2c2p.version}"/>
+    <input type='hidden' id='merchant_id' 			name='merchant_id' 			th:value="${payment2c2p.merchantId}"/>
+    <input type='hidden' id='payment_description' 	name='payment_description' 	th:value="${payment2c2p.paymentDesc}"/>
+    <input type='hidden' id='order_id' 				name='order_id' 			th:value="${payment2c2p.orderId}"/>
+    <input type='hidden' id='invoice_no' 			name='invoice_no' 			th:value="${payment2c2p.invoiceNo}"/>
+    <input type='hidden' id='currency' 				name='currency' 			th:value="${payment2c2p.currency}"/>
+    <input type='hidden' id='amount' 				name='amount'  				th:value="${payment2c2p.amount}"/>
+    <input type='hidden' id='customer_email' 		name='customer_email'  		th:value="${payment2c2p.customerEmail}"/>
+    <input type='hidden' id='pay_category_id' 		name='pay_category_id' 		th:value="${payment2c2p.payCategoryId}"/>
+    <input type='hidden' id='promotion' 			name='promotion'  			th:value="${payment2c2p.promotion}"/>
+    <input type='hidden' id='user_defined_1' 		name='user_defined_1' 		th:value="${payment2c2p.userDefined1}"/>
+    <input type='hidden' id='user_defined_2' 		name='user_defined_2' 		th:value="${payment2c2p.userDefined2}"/>
+    <input type='hidden' id='user_defined_3' 		name='user_defined_3' 		th:value="${payment2c2p.userDefined3}"/>
+    <input type='hidden' id='user_defined_4' 		name='user_defined_4' 		th:value="${payment2c2p.userDefined4}"/>
+    <input type='hidden' id='user_defined_5' 		name='user_defined_5' 		th:value="${payment2c2p.userDefined5}"/>
+    <input type='hidden' id='result_url_1' 			name='result_url_1' 		th:value="${payment2c2p.resultUrl1}"/>
+    <input type='hidden' id='result_url_2' 			name='result_url_2' 		th:value="${payment2c2p.resultUrl2}"/>
+    <input type='hidden' id='payment_option' 		name='payment_option' 		th:value="${payment2c2p.paymentOption}"/>
+    <input type='hidden' id='ipp_interest_type' 	name='ipp_interest_type' 	th:value="${payment2c2p.ippInterestType}"/>
+    <input type='hidden' id='recurring' 			name='recurring' 			th:value="${payment2c2p.recurring}"/>
+    <input type='hidden' id='default_lang' 			name='default_lang' 		th:value="${payment2c2p.defaultLang}"/>
+    <input type='hidden' id='tokenize_without_authorization' name='tokenize_without_authorization' th:value="${payment2c2p.tokenizewithoutauthorization}"/>
+    <input type='hidden' id='product_code' 				name='product_code' 				th:value="${payment2c2p.product}"/>
+    <input type='hidden' id='ipp_period_filter' 	name='ipp_period_filter' 	th:value="${payment2c2p.ippperiodfilter}"/>
+
+    <input type='hidden' id='hash_value' name='hash_value' th:value="${payment2c2p.hashValue}"/>
+</form>
+
+<script language="JavaScript">
+	document.authForm.submit();     //submit form to 2c2p Redirect
+</script>
+</body>
+</html>

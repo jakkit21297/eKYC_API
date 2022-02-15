@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>sep</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<style>
+		/* Center the loader */
+		#loader {
+			position: absolute;
+		    left: 52%;
+		    top: 40%;
+		    z-index: 1;
+		    width: 20px;
+		    height: 20px;
+		    margin: -75px 0 0 -75px;
+		    border: 20px solid #f3f3f3;
+		    border-radius: 50%;
+		    border-top: 20px solid #3498db;
+		    width: 80px;
+		    height: 80px;
+		    webkit-animation: spin 2s linear infinite;
+		    animation: spin 2s linear infinite;
+		}
+		
+		@-webkit-keyframes spin {
+		  0% { -webkit-transform: rotate(0deg); }
+		  100% { -webkit-transform: rotate(360deg); }
+		}
+		
+		@keyframes spin {
+		  0% { transform: rotate(0deg); }
+		  100% { transform: rotate(360deg); }
+		}
+		
+		/* Add animation to "page content" */
+		.animate-bottom {
+		  position: relative;
+		  -webkit-animation-name: animatebottom;
+		  -webkit-animation-duration: 1s;
+		  animation-name: animatebottom;
+		  animation-duration: 1s
+		}
+		
+		@-webkit-keyframes animatebottom {
+		  from { bottom:-100px; opacity:0 } 
+		  to { bottom:0px; opacity:1 }
+		}
+		
+		@keyframes animatebottom { 
+		  from{ bottom:-100px; opacity:0 } 
+		  to{ bottom:0; opacity:1 }
+		}
+		
+		#myDiv {
+		  display: none;
+		  text-align: center;
+		}
+		</style>
+</head>
+<body style="margin:0;">
+
+
+<!--Construct form to submit authorization request to 2c2p PGW-->
+<!--Payment request data should be sent to 2c2p PGW with POST method inside parameter named 'paymentRequest'-->
+<!-- <form action='https://t.2c2p.com/RedirectV3/payment' method='POST' name='authForm'> -->
+<form action='https://psipay.bangkokbank.com/b2c/eng/payment/payForm.jsp' method='POST' name='authForm'>
+<!-- <form action='https://ipay.bangkokbank.com/b2c/eng/payment/payForm.jsp' method='POST' name='authForm'> -->
+
+	<div id="loader"/>
+	
+	<input type='hidden' name='merchantId' 		th:value="${payment.merchantId}"/>
+	<input type='hidden' name='amount' 			th:value="${payment.amount}"/>
+	<input type='hidden' name='orderRef' 		th:value="${payment.orderRef}"/>
+	<input type='hidden' name='currCode' 		th:value="${payment.currCode}"/>
+	<input type='hidden' name='successUrl' 		th:value="${payment.successUrl}"/>
+	<input type='hidden' name='failUrl' 		th:value="${payment.failUrl}"/>
+	<input type='hidden' name='cancelUrl'  		th:value="${payment.cancelUrl}"/>
+	<input type='hidden' name='payType'  		th:value="${payment.payType}"/>
+	<input type='hidden' name='lang' 			th:value="${payment.lang}"/>
+	<input type='hidden' name='remark'  		th:value="${payment.remark}"/>
+	<input type='hidden' name='payMethod' 		th:value="${payment.payMethod}"/>
+</form>
+
+<script language="JavaScript">
+	document.authForm.submit();
+</script>
+</body>
+</html>
